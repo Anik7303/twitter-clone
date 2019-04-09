@@ -2,8 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/others_tweets"
-        android:title="@string/tweets" />
+        android:id="@+id/tweet"
+        android:title="@string/tweet" />
+
+    <item
+        android:id="@+id/user_feed"
+        android:title="@string/user_feed" />
 
     <item
         android:id="@+id/following"
