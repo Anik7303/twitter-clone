@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/others_tweets"
+        android:title="@string/tweets" />
+
+    <item
+        android:id="@+id/following"
+        android:title="@string/following" />
+
+    <item
+        android:id="@+id/logout"
+        android:title="@string/logout" />
+
+</menu>

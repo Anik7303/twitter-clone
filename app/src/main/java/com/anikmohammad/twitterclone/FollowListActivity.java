@@ -54,7 +54,7 @@ public class FollowListActivity extends AppCompatActivity implements AdapterView
     }
 
     private void populateUsersList() {
-        ParseQuery<ParseUser> query = ParseQuery.getQuery("User");
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereNotEqualTo("username", ParseUser.getCurrentUser().getUsername());
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override

@@ -71,17 +71,14 @@ public class MainActivity extends AppCompatActivity {
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
-                String message = "";
                 if(e == null && user != null) {
-                    message = "Login successful";
+                    redirectToFollowListActivity();
                 }else if(e == null) {
-                    message = "There was a problem while loggin in";
+                    Toast.makeText(MainActivity.this, "There was a problem while loggin in", Toast.LENGTH_SHORT).show();
                 }else {
-                    message = e.getMessage();
+                    Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     handleException(e, "ParseUser Login");
                 }
-                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
-                logout();
             }
         });
     }
@@ -95,8 +92,7 @@ public class MainActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if(e == null) {
                     Toast.makeText(MainActivity.this, "signup successful", Toast.LENGTH_SHORT).show();
-                    login(username, password);
-                    logout();
+                    redirectToFollowListActivity();
                 }else {
                     Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     handleException(e, "ParseUser SignUp");
