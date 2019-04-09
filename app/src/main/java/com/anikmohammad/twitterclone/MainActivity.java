@@ -18,19 +18,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ParseUser user = new ParseUser();
-        user.setUsername("root");
-        user.setPassword("root");
-        user.signUpInBackground(new SignUpCallback() {
-            @Override
-            public void done(ParseException e) {
-                if(e == null) {
-                    Toast.makeText(MainActivity.this, "root successfully signed up", Toast.LENGTH_SHORT).show();
-                } else {
-                    handleException(e, "ParseUser SignUp");
-                }
-            }
-        });
+//        // sign up a user named 'root'
+//        ParseUser user = new ParseUser();
+//        user.setUsername("root");
+//        user.setPassword("root");
+//        user.signUpInBackground(new SignUpCallback() {
+//            @Override
+//            public void done(ParseException e) {
+//                if(e == null) {
+//                    Toast.makeText(MainActivity.this, "root successfully signed up", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    handleException(e, "ParseUser SignUp");
+//                }
+//            }
+//        });
     }
 
     protected void testServer(View view) {
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
+        } else {
+            Toast.makeText(MainActivity.this, String.format("username: %s", ParseUser.getCurrentUser().getUsername()), Toast.LENGTH_SHORT).show();
         }
     }
 
