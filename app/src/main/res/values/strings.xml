@@ -3,4 +3,11 @@
     <string name="app_id">sMCqrsyO4j9mRY3EpS5GCvpgjOquXaL7BVPfSisH</string>
     <string name="master_key">jUlBX8nnDLLWrQ3hUQyXZC1qTtMENEQ0pnh2BDUw</string>
     <string name="server_url">http://10.0.2.2:1337/parse/</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="signup">Register</string>
+    <string name="signup_prefix">Create an account</string>
+    <string name="login_prefix">Already have an account</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
 </resources>
