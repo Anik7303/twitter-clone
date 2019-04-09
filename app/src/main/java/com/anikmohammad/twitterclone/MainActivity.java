@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,6 +17,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ParseUser user = new ParseUser();
+        user.setUsername("root");
+        user.setPassword("root");
+        user.signUpInBackground(new SignUpCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e == null) {
+                    Toast.makeText(MainActivity.this, "root successfully signed up", Toast.LENGTH_SHORT).show();
+                } else {
+                    handleException(e, "ParseUser SignUp");
+                }
+            }
+        });
     }
 
     protected void testServer(View view) {
@@ -30,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                     } else if(e == null) {
                         Toast.makeText(MainActivity.this, "user == null", Toast.LENGTH_SHORT).show();
                     } else {
-                        handleException(e, "User Login");
+                        handleException(e, "ParseUser Login");
                     }
                 }
             });
