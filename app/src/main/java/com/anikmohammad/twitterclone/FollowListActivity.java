@@ -82,7 +82,9 @@ public class FollowListActivity extends AppCompatActivity implements AdapterView
 
                     List<String> followingUsers = ParseUser.getCurrentUser().getList(columnName);
                     for(String username: followingUsers) {
-                        listView.setItemChecked(users.indexOf(username), true);
+                        if(users.contains(username)) {
+                            listView.setItemChecked(users.indexOf(username), true);
+                        }
                     }
                 }else if(e == null) {
                     Toast.makeText(FollowListActivity.this, "There is no user except you", Toast.LENGTH_SHORT).show();
