@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.parse.LogInCallback;
+import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -52,6 +53,21 @@ public class MainActivity extends AppCompatActivity {
             });
         } else {
             Toast.makeText(MainActivity.this, String.format("username: %s", ParseUser.getCurrentUser().getUsername()), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    protected void logout(View view) {
+        if(ParseUser.getCurrentUser() != null) {
+            ParseUser.logOutInBackground(new LogOutCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if(e == null) {
+                        Toast.makeText(MainActivity.this, "Logout successful", Toast.LENGTH_SHORT).show();
+                    } else {
+                        handleException(e, "ParseUser Logout");
+                    }
+                }
+            });
         }
     }
 
