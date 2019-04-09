@@ -15,6 +15,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ public class FollowListActivity extends AppCompatActivity implements AdapterView
     private ListView listView;
     private ArrayList<String> users;
     private ArrayAdapter<String> adapter;
+    private String columnName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,16 +43,28 @@ public class FollowListActivity extends AppCompatActivity implements AdapterView
         adapter = new ArrayAdapter<>(FollowListActivity.this, android.R.layout.simple_list_item_checked, users);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
+        columnName = "following";
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         CheckedTextView checkedTextView = (CheckedTextView) view;
         if(checkedTextView.isChecked()) {
-            Log.i("Info", String.format("%s is checked", users.get(position)));
+            ParseUser.getCurrentUser().add(columnName, users.get(position));
         }else {
-            Log.i("Info", String.format("%s is not checked", users.get(position)));
+            List<String> tempUsers = ParseUser.getCurrentUser().getList(columnName);
+            tempUsers.remove(users.get(position));
+            ParseUser.getCurrentUser().remove(columnName);
+            ParseUser.getCurrentUser().put(columnName, tempUsers);
         }
+        ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e != null) {
+                    handleException(e, "ParseUser following");
+                }
+            }
+        });
     }
 
     private void populateUsersList() {
@@ -65,6 +79,11 @@ public class FollowListActivity extends AppCompatActivity implements AdapterView
                         users.add(user.getUsername());
                     }
                     adapter.notifyDataSetChanged();
+
+                    List<String> followingUsers = ParseUser.getCurrentUser().getList(columnName);
+                    for(String username: followingUsers) {
+                        listView.setItemChecked(users.indexOf(username), true);
+                    }
                 }else if(e == null) {
                     Toast.makeText(FollowListActivity.this, "There is no user except you", Toast.LENGTH_SHORT).show();
                 }else {
