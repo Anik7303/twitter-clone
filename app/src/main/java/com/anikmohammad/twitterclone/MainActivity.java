@@ -20,8 +20,8 @@ import com.parse.SignUpCallback;
 public class MainActivity extends AppCompatActivity {
 
     private boolean loginState;
-    private EditText usernameEditText;
-    private EditText passwordEditText;
+    private static EditText usernameEditText;
+    private static EditText passwordEditText;
     private TextView alternatePrefixTextView;
     private TextView alternateTextView;
     private Button actionButton;
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setupVariables();
 
         if(ParseUser.getCurrentUser() != null) {
-            redirectToFollowListActivity();
+            redirectToUserFeed();
         }
 
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
@@ -49,6 +49,11 @@ public class MainActivity extends AppCompatActivity {
         alternatePrefixTextView = findViewById(R.id.alternatePrefixTextView);
         alternateTextView = findViewById(R.id.alternateTextVew);
         actionButton = findViewById(R.id.actionButton);
+    }
+
+    protected static void setEditTexts(String username, String password) {
+        usernameEditText.setText(username);
+        passwordEditText.setText(password);
     }
 
     protected void actionFunction(View view) {
@@ -72,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void done(ParseUser user, ParseException e) {
                 if(e == null && user != null) {
-                    redirectToFollowListActivity();
+                    redirectToUserFeed();
                 }else if(e == null) {
                     Toast.makeText(MainActivity.this, "There was a problem while loggin in", Toast.LENGTH_SHORT).show();
                 }else {
@@ -92,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if(e == null) {
                     Toast.makeText(MainActivity.this, "signup successful", Toast.LENGTH_SHORT).show();
-                    redirectToFollowListActivity();
+                    redirectToUserFeed();
                 }else {
                     Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     handleException(e, "ParseUser SignUp");
@@ -127,8 +132,8 @@ public class MainActivity extends AppCompatActivity {
         loginState = !loginState;
     }
 
-    private void redirectToFollowListActivity() {
-        Intent intent = new Intent(getApplicationContext(), FollowListActivity.class);
+    private void redirectToUserFeed() {
+        Intent intent = new Intent(getApplicationContext(), UserFeedActivity.class);
         startActivity(intent);
     }
 

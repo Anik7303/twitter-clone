@@ -42,6 +42,7 @@ public class UserFeedActivity extends AppCompatActivity {
             case R.id.logout:
                 ParseUser.logOut();
                 finish();
+                MainActivity.setEditTexts("","");
                 break;
             default:
                 return false;
