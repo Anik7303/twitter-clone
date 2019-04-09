@@ -31,7 +31,9 @@ public class UserFeedActivity extends AppCompatActivity {
         super.onOptionsItemSelected(item);
         Intent intent;
         switch(item.getItemId()) {
-            case R.id.others_tweets:
+            case R.id.tweet:
+                break;
+            case R.id.user_feed:
                 intent = new Intent(UserFeedActivity.this, TweetsActivity.class);
                 startActivity(intent);
                 break;
