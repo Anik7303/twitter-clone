@@ -1,5 +1,6 @@
 package com.anikmohammad.twitterclone;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,15 +10,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.LogOutCallback;
+import com.parse.ParseAnalytics;
 import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,7 +35,11 @@ public class MainActivity extends AppCompatActivity {
 
         setupVariables();
 
-        logout();
+        if(ParseUser.getCurrentUser() != null) {
+            redirectToFollowListActivity();
+        }
+
+        ParseAnalytics.trackAppOpenedInBackground(getIntent());
     }
 
     private void setupVariables() {
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void login(String username, String password) {
+        logout();
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
@@ -84,14 +87,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void signup(final String username, final String password) {
-//        ParseQuery<ParseUser> query = ParseQuery.getQuery("User");
-//        query.whereEqualTo("username", username);
-//        query.findInBackground(new FindCallback<ParseUser>() {
-//            @Override
-//            public void done(List<ParseUser> objects, ParseException e) {
-//
-//            }
-//        });
         ParseUser user = new ParseUser();
         user.setUsername(username);
         user.setPassword(password);
@@ -134,6 +129,11 @@ public class MainActivity extends AppCompatActivity {
             alternateTextView.setText(R.string.signup);
         }
         loginState = !loginState;
+    }
+
+    private void redirectToFollowListActivity() {
+        Intent intent = new Intent(getApplicationContext(), FollowListActivity.class);
+        startActivity(intent);
     }
 
     private void handleException(Exception exception, String title) {
