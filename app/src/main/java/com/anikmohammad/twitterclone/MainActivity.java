@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setupVariables();
 
         if(ParseUser.getCurrentUser() != null) {
-            redirectToUserFeed();
+            redirectToTweets();
         }
 
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void done(ParseUser user, ParseException e) {
                 if(e == null && user != null) {
-                    redirectToUserFeed();
+                    redirectToTweets();
                 }else if(e == null) {
                     Toast.makeText(MainActivity.this, "There was a problem while loggin in", Toast.LENGTH_SHORT).show();
                 }else {
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if(e == null) {
                     Toast.makeText(MainActivity.this, "signup successful", Toast.LENGTH_SHORT).show();
-                    redirectToUserFeed();
+                    redirectToTweets();
                 }else {
                     Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     handleException(e, "ParseUser SignUp");
@@ -132,8 +132,8 @@ public class MainActivity extends AppCompatActivity {
         loginState = !loginState;
     }
 
-    private void redirectToUserFeed() {
-        Intent intent = new Intent(getApplicationContext(), UserFeedActivity.class);
+    private void redirectToTweets() {
+        Intent intent = new Intent(getApplicationContext(), TweetsActivity.class);
         startActivity(intent);
     }
 
